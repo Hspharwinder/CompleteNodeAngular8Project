@@ -1,0 +1,172 @@
+<div class="container mt-5">
+    <u><h1 class="text-center">Create New Record</h1></u><br>
+    <form [formGroup]="formValue" (ngSubmit)="onSubmit(formValue)">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputName4">Name</label>
+
+          <input type="text" formControlName="name" class="form-control"
+          id="inputName4" placeholder="Name"
+          [class.is-invalid]="formValue.get('name').invalid && formValue.get('name').touched">
+
+           <small [class.d-none]="formValue.get('name').untouched || formValue.get('name').valid"
+           class="text-danger">
+             Name is required.
+           </small>
+
+        </div>      
+        <div class="form-group col-md-6">
+          <label for="inputDept">Dept</label>
+
+          <select id="inputDept" formControlName="dept" (change)="deptChange($event)"
+          class="form-control"  [class.is-invalid]="dept.touched && dept.invalid">
+              <option *ngFor="let d of Dept" [value]="d.name">{{d.name}}</option>
+          </select>
+
+          <small class="text-danger" 
+          [class.d-none]="dept.untouched || dept.valid">
+            Department is required.
+          </small>
+
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputDesignation">Designation</label>
+          
+          <select id="inputDesignation" formControlName="designation" 
+          class="form-control"
+          [class.invalid]="desi.touched">
+            <option *ngFor="let d of designation" [value]="d">{{d}}</option>
+          </select>
+
+          <div *ngIf="desi.touched && dept.untouched">
+            <small class="text-danger">
+              Select Department first.
+            </small>
+          </div>       
+
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Email</label>
+
+          <input type="email" class="form-control" formControlName="email" id="inputEmail4"
+          [class.is-invalid]="formValue.get('email').invalid && formValue.get('email').touched"
+           placeholder="Email">
+
+          <div *ngIf="formValue.get('email').invalid && formValue.get('email').touched">
+            <small *ngIf="formValue.get('email').errors?.required" class="text-danger">
+              Email required.
+            </small>
+            <small *ngIf="formValue.get('email').errors?.email" class="text-danger">
+              Email invalid.
+            </small>
+          </div>
+
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Password</label>
+
+          <input type="password" class="form-control" formControlName="password" id="inputPassword4" 
+          placeholder="Password" [class.is-invalid]="pwd.invalid && pwd.touched">
+
+          <div *ngIf="pwd.valid || pwd.touched">
+            <small class="text-danger" *ngIf="pwd.errors?.required">
+              Password required.
+            </small>
+            <small class="text-danger" *ngIf="pwd.errors?.minlength">
+              Password must be 5 characters
+            </small>
+          </div>
+
+        </div>         
+        
+        <div class="form-group col-md-6">
+            <label for="inputHobbies">Hobbies</label>
+            <ng-multiselect-dropdown-angular7
+              [placeholder]="'Choose ....'"
+              formControlName="hobbies"
+              [data]="hobbiesList"  
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown-angular7>
+            <small *ngIf="formValue.get('hobbies').touched && formValue.get('hobbies').invalid" class="text-danger">
+              Please Select hobbie
+            </small>
+          </div>
+        <div class="form-row col-md-6">
+          <div class="col-md-2">
+            <label for="radio">
+              Gender :
+            </label>          
+          </div>
+            <div class="form-group form-check" id="radio">
+              <div class="col-md-2 form-check">
+
+                <input class="form-check-input"  formControlName="gender" value="male" 
+                name="gender" type="radio" id="gridCheck1">
+                <!-- <label class="form-check-label" for="gridCheck1"> -->
+                  Male
+                <!-- </label> -->
+              </div>        
+              <div class="col-md-2 form-check">
+                <input class="form-check-input" formControlName="gender" value="female" name="gender" type="radio" id="gridCheck2">
+                <!-- <label class="form-check-label" for="gridCheck2"> -->
+                  Female
+                <!-- </label> -->
+              </div>
+              <small class="text-danger" *ngIf="formValue.get('gender').invalid && formValue.get('gender').touched">
+                Please Select Gender.
+              </small>
+            </div> 
+        </div>
+        <div class="form-group col-md-6" id="games">
+            <div class="form-check">
+              <label class="form-check-label" for="games">
+                Games :
+              </label>
+            </div>        
+            <div class="form-check"  *ngFor="let control of checkList.controls; let i = index">
+              <input class="form-check-input"  type="checkbox"     
+                [formControl]="control"        
+                [value]="gamesCheckBoxList[i].item_text"  id="id{{i}}" 
+                (change)="onCheckChange($event)"
+                >
+              <!-- <label class="form-check-label" [for]="i.item_text"> -->
+                {{gamesCheckBoxList[i].item_text}}   
+              <!-- </label> -->
+            </div> 
+            <div class="form-check">
+              <input class="form-check-input"  type="checkbox" id="Other" (change)="otherChange($event)">
+              <!-- <label class="form-check-label" for="Other"> -->
+                Other
+              <!-- </label> -->
+            </div>
+            <small *ngIf="validError" class="text-danger">
+                Please select atleast 1 game.
+            </small>
+            <small *ngIf="games.touched && games.invalid" class="text-danger">
+                Please select atleast 1 game.
+            </small>
+        </div>     
+      </div>     
+      <div class="form-group col-md-2 float-right"  *ngIf="otherTextBox">
+        <input type="text" class="form-control" formControlName="otherGames"  
+        name="otherGames" id="inputOther" (blur)="clickTextBoxGames($event)"
+        >
+      </div>      
+      <div class="form-group">       
+        <label for="exampleFormControlFile1">Example file input</label>
+        <div class="form-group">   
+            <img *ngIf="fileImageUrl" [src]="fullPath"  height="100px">
+        </div>
+        <input type="file" class="form-control-file" formControlName="fileUpload" name="fileImageUrl"
+        id="exampleFormControlFile1" (change)="uploadFile($event.target.files)" multiple>
+      </div>
+      <a routerLink="/home" routerLinkActive="active">
+        <button type="button" class="btn btn-light float-right">Cancel</button>
+      </a>
+      <button type="submit"  class="btn btn-primary float-right">Save</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,10 @@
+.form-check{
+    margin-right: 40px; 
+    display: inline-block
+}
+label{
+    font-weight: bold;
+}
+button{
+    margin-right: 10px;
+}

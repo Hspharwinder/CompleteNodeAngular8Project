@@ -1,0 +1,67 @@
+<div class="container mt-5">
+    <u><h1 class="text-center">Home Page</h1></u><br>  
+    <div class="row">
+        <div class="col-6">
+            <a routerLink="/insert" routerLinkActive="active">
+                <button type="button" class="btn btn-primary mb-2">Add New Record</button>
+            </a>
+        </div>       
+        <div class="text-right col-6">
+            <button type="button" class="btn btn-primary mb-2 text-right" (click)=logout()>Logout</button>
+        </div>
+    </div>  
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Dept</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Email</th>
+                <th scope="col">Games</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Hobbies</th>
+                <th scope="col">Password</th>
+                <th scope="col">Button</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let value of getData">
+                <td scope="row">
+                    <img src="{{ApiUrl+value.filePath}}" height="50px" />
+                    <!-- path {{ApiUrl+value.filePath}} ApiUrl+value.filePath -->
+                    <img *ngIf="!!filePath" src="../../assets/Images/dummyUserImage.png" height="50px" />
+                </td>
+                <td>{{value.name}}</td>
+                <td>{{value.dept}}</td>
+                <td>{{value.designation}}</td>
+                <td>{{value.email}}</td>
+                <td><div *ngFor="let game of value.games">{{getGames(game)}}</div></td>
+                <td>{{value.gender}}</td>
+                <td><div>{{getHobbies(value.hobbies)}}</div></td>
+                <td>{{value.password}}</td>
+                <td>
+                    <a [routerLink]="['/update/', value._id]" routerLinkActive="active">
+                        <button type="button" class="btn btn-light">Edit</button>
+                    </a>
+                    <!-- <a [routerLink]="['./edit, 'form2']">Form2</a> -->
+                    <button type="button" class="btn btn-danger" (click)="delete(value._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
