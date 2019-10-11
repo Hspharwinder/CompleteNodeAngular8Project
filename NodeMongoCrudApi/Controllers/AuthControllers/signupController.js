@@ -14,7 +14,6 @@ router.post('/login', login);
 
 
 function signup(req,res) {    
-    debugger;
     signupDB.findOne({username:req.body.username}).exec().then(user => {
         if (user !== null && user.length >= 1  ) {
             return res.status(409).json({ message: "User Already Exists"});
@@ -67,7 +66,6 @@ function login(req,res){
        res.status(500).json({error : "Error while Finding user, May be user already exists "+ err})
     })
     // service.authenticate(req.body).then((user) => { 
-    //     debugger;
     //     if(user == "Invalid User!"){
     //        res.status(400).json({ message: 'Username or password is incorrect' })
     //     }else{
