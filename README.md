@@ -9,7 +9,7 @@ auth.js/app.js
  
  user.validation.js
  var validation = async (req,res,next) => {  
-  v = new Validator(req.body, {
+  let v = new Validator(req.body, {
     email: 'required|email',
     password: 'required'
   });
