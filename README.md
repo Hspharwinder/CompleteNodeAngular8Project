@@ -4,10 +4,13 @@ Complete Node and Angular8 Project with  Crud operation and Authentication
 # for validation
 https://www.npmjs.com/package/node-input-validator
 
+
 auth.js/app.js
  app.post('/signup', user.validation, user.signup);
  
  user.validation.js
+ 
+const { Validator } = require('node-input-validator');
  var validation = async (req,res,next) => {  
   let v = new Validator(req.body, {
     email: 'required|email',
